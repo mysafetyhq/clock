@@ -1,155 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
-<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="Big Time" />
-<link rel="manifest" href="/site.webmanifest" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-/* Safari syntax */
-:-webkit-full-screen {
-  background-color: black;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
+    <title>SHQ Time</title>
+    <style>
+        /* Safari syntax */
+        :-webkit-full-screen {
+            background-color: black;
+        }
 
-/* IE11 */
-:-ms-fullscreen {
-  background-color: black;
-}
+        /* IE11 */
+        :-ms-fullscreen {
+            background-color: black;
+        }
 
-/* Standard syntax */
-:fullscreen {
-  background-color: black;
-}
+        /* Standard syntax */
+        :fullscreen {
+            background-color: black;
+        }
 
-/* Style the button */
-button {
-  padding: 12px;
-  font-size: 22px;
-  color: red;
-  button-color: red;
-  background-color: black;
-  outline-color: black;
-  outline-width: 4px;
-  border-color: red;
-  border-style: solid;
-  z-index: 9999;
-}
-/* Hide button in fullscreen mode */
-:fullscreen button {
-  display: none;
-}
-}
-</style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 10;
+            font-family: 'Oswald', sans-serif;
+            background-color: black;
+            color: red;
+            overflow: hidden;
+        }
+
+        #time-container,
+        #quote-container {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 45vw;
+            margin-bottom: 0;
+            line-height: 1;
+        }
+
+        .blink {
+            animation: blink-animation 1s steps(2, start) infinite;
+        }
+
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        .quote {
+            font-size: 5vw;
+            white-space: nowrap; 
+            overflow: hidden; 
+            animation: scroll-text 10s linear infinite; 
+        }
+
+        @keyframes scroll-text {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
 </head>
 <body>
 
+    <div id="time-container">
+        <h1>
+            <span id="hours"></span><span class="blink">:</span><span id="minutes"></span>
+        </h1>
+    </div>
 
+    <div id="quote-container">
+        <p class="quote" id="quote"></p>
+    </div>
 
-<button onclick="openFullscreen();">GO FULL SCREEN</button>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
 
-<script>
-var elem = document.documentElement;
-function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
-}
+        setInterval(updateTime, 500);
 
-</script>
-
-</body>
-</html>
-<head>
-<title>Big Time</title>
-  <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 10;
-      font-family: 'Oswald', sans-serif;
-      background-color: black;
-      color: red;
-      overflow: hidden;
-    }
-
-    #time-container,
-    #quote-container {
-      text-align: center;
-      margin-top: 0;
-    }
-
-    h1 {
-      font-size: 45vw;
-      margin-bottom: 0;
-      margin-top: 0;
-      padding-top: 0;
-      line-height: 1;
-    }
-
-    .blink {
-      animation: blink-animation 1s steps(2, start) infinite;
-    }
-
-    @keyframes blink-animation {
-      to {
-        visibility: hidden;
-      }
-    }
-
-    .quote {
-      font-size: 5vw;
-      margin-top: 0;
-      margin-bottom: 0;
-      white-space: nowrap; /* Prevent line breaks */
-      overflow: hidden; /* Hide overflowing content */
-      animation: scroll-text 10s linear infinite; /* Adjust duration and timing function as needed */
-    }
-
-    @keyframes scroll-text {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(-100%);
-      }
-    }
-  </style>
-</head>
-<body>
-
-<div id="time-container">
-  <h1>
-    <span id="hours"></span><span class="blink">:</span><span id="minutes"></span>
-  </h1>
-</div>
-
-<div id="quote-container">
-  <p class="quote" id="quote"></p>
-</div>
-
-
-<script>
-  function updateTime() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    document.getElementById('hours').textContent = hours;
-    document.getElementById('minutes').textContent = minutes;
-  }
-
-  setInterval(updateTime, 500);
-</script>
-
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js').then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch((error) => {
+                    console.error('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
